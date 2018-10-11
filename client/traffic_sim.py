@@ -6,9 +6,9 @@ import logging
 from datetime import datetime
 import sys
 
- 
+
 class Producer():
- 
+
     def __init__(self, task_queue, num_consumers, url, num_requests=5, runtime=15):
         multiprocessing.Process.__init__(self)
         self.task_queue = task_queue
@@ -26,7 +26,7 @@ class Producer():
         self.timer += time.time() - self._count_timer
         self._count_timer = time.time()
         return self.timer
- 
+
     def _work(self):
         '''
         DEF: 
@@ -78,7 +78,7 @@ class Consumer(multiprocessing.Process):
             answer = next_task()
             self.task_queue.task_done()
             self.result_queue.put(answer)
- 
+
 class Task:
     """The summary line for a class docstring should fit on one line.
 
@@ -96,7 +96,7 @@ class Task:
 
         """
         self.url = url
- 
+
     def __call__(self):
         epoch_time = time.time() # start timer
         response = requests.get(self.url) # url to ping
@@ -107,11 +107,11 @@ class Task:
         task_result = f' timestamp: {timestamp}, status_code: {status}, request_epoch_(sec): {epoch_time}'
 
         return task_result
- 
+
     def __str__(self):
         return f'requesting {self.url}'
- 
- 
+
+
 class HttpTraffic:
 
     def __init__(self, url, runtime, timeout = 10):
